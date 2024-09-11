@@ -1,0 +1,1078 @@
+= M2 UF1
+= Activitat - Escenari Ansible - ntp server
+:revdate: Maig 17, 2019
+:revnumber: 1.0
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toc-title: Índex  de continguts
+:toclevels: 3
+:sectnums:
+
+=  Model Entitat-Relació (CHEN)
+
+==  Introducció
+
+El disseny d’una base de dades consisteix a definir l’estructura de 
+les dades que ha de tenir la base de dades. L’origen del model ER es 
+troba pels treballs realitzats per **Peter Chen** el 1976.
+
+==  Entitat
+
+===  Entitat
+
+Per **entitat** entenem un objecte del món real que podem distingir de la resta d’objectes i del qual ens interessen algunes propietats.
+
+Es representen amb un rectangle, el nom s’escriu dins en majúscules.
+
+Exemple:
+
+image::M2UF1_files/ER_entitat.jpg[ER_entitat.jpg]
+
+===  Atributs
+
+Les propietats dels objectes que ens interessen s’anomenen **atributs**.
+
+Es representen mitjançant el seu nom en minúscules, encerclat i 
+unit amb un guionet al rectangle de l’entitat. Moltes vegades, com que 
+hi ha molts atributs, els llistarem apart.
+
+Exemple:  
+
+D’un empleat ens pot interessar el DNI, el NSS, el nom, el cognom i el sou com atributs.
+
+Una representació és:
+
+
+
+image::M2UF1_files/ER_atributs.jpg[ER atributs.jpg]
+
+
+
+
+i altra representació:
+
+
+
+image::M2UF1_files/ER_atributs2.jpg[ER atributs2.jpg]
+
+
+
+
+===  Clau
+
+Ha de ser possible distingir una entitat de la resta d’objectes, per 
+tant hem de trobar un conjunt d’atributs que permetin identificar-la, 
+aquest conjunt d’atributs formen una **clau de l’entitat**.
+
+Exemple:  
+
+L’entitat empleat té una clau que consta de l’atribut DNI, perquè tots tenen número diferent.
+
+
+Pot haver més d’una clau, aquestes s’anomenen **claus candidates**.
+
+Exemple:  
+
+L’entitat empleat pot tenir també la clau del NSS, que també serà diferent per tots els empleats.
+
+
+El dissenyador escull una clau primària entre totes les claus candidates.  
+
+La **clau primària** la subratllem per distingir-la de la resta. Si 
+per limitacions de l'editor, no ens permet subratllar, escriurem a 
+continuació de l'entitat el format: clau: nom_dels_camps_que_formen_la_clau.
+
+Exemple:  
+
+En el cas de l’entitat empleat, podem escollir com a clau primària el DNI.
+
+Una representació és:
+
+
+image::M2UF1_files/ER_clau.jpg[ER clau.jpg]
+
+
+
+i altra representació:
+
+
+image::M2UF1_files/ER_clau2.jpg[ER clau2.jpg]
+
+
+
+
+==  Relació
+
+===  Relació
+
+Una relació és una associació entre entitats.  
+
+Es representen unint les entitats i posant un rombe, s’escriu el nom de la relació amb lletres majúscules.
+
+Exemple:  
+
+Considerem una entitat empleat i
+ una entitat despatx. Un empleat té assignat un despatx. Hi ha una 
+relació entre empleat i despatx.
+
+image::M2UF1_files/Relacio.jpeg[Relacio.jpeg]
+
+
+
+
+===  Atributs
+
+A vegades pot interessar reflectir algunes propietats de les relacions, per això s’utilitzen els atributs.
+Es representen mitjançant el seu nom en minúscules unit amb un guionet al rombe de la relació a la qual pertanyen.
+
+Exemple:  
+
+L’entitat estudiant i l’entitat assignatura, tenen com a atribut la nota.
+
+image::M2UF1_files/Atribut_relacio.jpeg[Atribut relacio.jpeg]
+
+
+
+
+===  Grau
+
+Una relació pot associar dues o més entitats. El nombre d’entitats que associa una relació és el grau de la relació.
+
+Exemple:  
+
+Suposem que desitgem enregistrar diverses notes per cada assignatura i estudiant corresponents als diversos semestres.
+
+image::M2UF1_files/Grau.jpeg[Grau.jpeg]
+
+
+
+
+===  Connectivitat de les relacions binàries
+
+La **connectivitat** d’una relació expressa el tipus de correspondència que hi ha entre les ocurrències d’entitats associades amb la relació.
+
+Una relació binària entre dues entitats pot tenir tres tipus de connectivitat:
+
+*   **Connectivitat un a un (1:1)**: es denota posant un 1 a banda i banda de la relació.
+Exemple:  
+
+Una empresa disposa de diverses delegacions. A cada ciutat només en pot tenir una.
+
+image::M2UF1_files/Connectivitat_1_1.jpeg[Connectivitat 1 1.jpeg]
+
+
+
+
+*   **Connectivitat un a molts (1:N)**: es denota posant un 1 a una banda i una N a l’altra.
+Exemple:  
+
+Els empleats d’una empresa tenen un despatx assignat. El despatx pot ser compartit per varis empleats.
+
+image::M2UF1_files/Connectivitat_1_N.jpeg[Connectivitat 1 N.jpeg]
+
+
+
+
+*   **Connectivitat molts a molts (M:N)**: es denota posant un M a una de les bandes i una N a l’altra.
+Exemple:  
+
+Els estudiants del centre poden cursar diverses assignatures.
+
+image::M2UF1_files/Connectivitat_N_N.jpeg[Connectivitat N N.jpeg]
+
+
+
+
+===  Dependències d’existència a les relacions binàries
+
+Algunes vegades, una entitat pot existir si hi ha com a mínim una 
+altra entitat individual associada. És diu que la darrera és una entitat
+ obligatòria a la relació, en cas contrari és una entitat opcional.
+
+Es representen mitjançant un cercle a la línia de connexió indica
+ que l’entitat és opcional a la relació, l’obligatorietat d’una entitat 
+s’indica amb una línia perpendicular.
+
+Exemple:  
+
+
+image::M2UF1_files/Relacio_existencia.jpeg[Relacio existencia.jpeg]
+
+
+Això indica que no pot existir 
+un departament que no tingui director del departament, pot ser que hi 
+hagi un empleat que no sigui cap de departament.
+
+
+===  Interrelacions n-àries
+
+Les interrelacions n-àries, igual que les binàries, poden tenir 
+diferents tipus de connectivitat.
+Per exemple, en interrelacions terciàries, cadascuna de les tres 
+entitats associades amb una interrelació ternària pot estar connectada 
+amb connectivitat “un” o bé amb connectivitat “molts”. Segons això, les 
+interrelacions ternàries poden tenir quatre tipus de connectivitat: 
+M:N:P, M:N:1, N:1:1 i 1:1:1.
+
+Exemple:  
+
+Considerem una interrelació que anomenem classe i que associa les entitats assignatura, aula i hora-setmanal.
+
+image::M2UF1_files/Relacio_terciaria.jpeg[Relacio terciaria.jpeg]
+
+
+
+
+===  Interrelacions recursives
+
+Una interrelació recursiva és una interrelació a la qual alguna entitat està associada més d’una vegada.
+
+Exemple:  
+
+Si, d’una entitat persona, 
+volem tenir constància de quines persones estan actualment casades entre
+ elles, caldrà definir la interrelació següent, que associa dues vegades
+ l’entitat persona:
+
+
+image::M2UF1_files/Recursiva.jpeg[Recursiva.jpeg]
+
+
+
+
+
+image::M2UF1_files/Recursiva2.jpeg[Recursiva2.jpeg]
+
+
+
+Exemple d’interrelació recursiva binària:
+
+
+image::M2UF1_files/Recursiva_terciaria.jpeg[Recursiva terciaria.jpeg]
+
+
+
+
+==  Extensió del model ER
+
+===  Entitats dèbils
+
+Una entitat dèbil és una entitat els atributs de la qual no la 
+identifiquen completament, sinó que només la identifiquen de manera 
+parcial. Aquesta entitat ha de participar en una interrelació que ajuda a
+ identificar-la.
+
+Exemple:  
+
+Suposem que hi pot haver 
+despatxos amb el mateix número a edificis diferents. Aleshores, el seu 
+número no identifica completament un despatx.
+
+image::M2UF1_files/Relacio_feble.jpeg[Relacio feble.jpeg]
+
+
+
+
+===  Generalització/especialització
+
+La generalització/especialització permet reflectir el fet que hi ha 
+una entitat general, que anomenem entitat superclasse, que es pot 
+especialitzar en entitats subclasse:
+
+*   L’entitat superclasse ens permet modelitzar les característiques comunes de l’entitat vista a un nivell genèric.
+
+*   Les entitats subclasse ens permeten modelitzar les característiques pròpies de les seves especialitzacions.
+
+Cal que es compleixi que tota ocurrència d’una entitat subclasse sigui també una ocurrència de la seva entitat superclasse.
+
+Exemple:  
+
+En la figura de la pàgina 
+següent hi ha representades l’entitat superclasse, que correspon a 
+l’empleat de l’exemple anterior, i les entitats subclasse, que 
+corresponen al directiu, al tècnic i a l’administratiu del mateix 
+exemple.
+
+image::M2UF1_files/Especialitzacio.jpeg[Especialitzacio.jpeg]
+
+
+
+
+La generalització/especialització pot ser de dues maneres:
+
+*   **Disjunta**. En aquest cas no pot passar que una mateixa
+ocurrència aparegui a dues entitats subclasse diferents. Es denotagràficament amb l’etiqueta D.
+
+*   **Encavalcada**. En aquest cas no hi ha la restricció anterior. Es denota gràficament amb l’etiqueta E.
+
+A més, la generalització/especialització també es pot classificar de la manera següent:
+
+*   **Total**. En aquest cas tota ocurrència de l’entitat
+superclasse ha de pertànyer a alguna de les entitats subclasse. Esdenota amb l’etiqueta T.
+
+*   **Parcial**. En aquest cas no cal que això passi. Es denota amb l’etiqueta P.
+Exemple:  
+
+Completant l’exemple anterior, tenim:
+
+image::M2UF1_files/Especialitzacio2.jpeg[Especialitzacio2.jpeg]
+
+
+
+
+===  Entitats associatives
+
+L’entitat resultant de considerar una interrelació entre entitats com
+ si fos una entitat és una entitat associativa, i tindrà el mateix nom 
+que la interrelació sobre la qual es defineix.
+
+Exemple:  
+
+Recorregut és una interrelació 
+de connectivitat M:N que enregistra les ciutats per on han passat els 
+diferents viatges organitzats per una empresa de repartiment de paquets.
+ Considerem recorregut una entitat associativa per tal de poder-la 
+relacionar amb l’entitat client i reflectir per ordre de quins clients 
+s’han fet repartiments en una ciutat del recorregut d’un viatge, i el 
+nombre de paquets carregats i descarregats per indicació d’aquell 
+client.
+
+image::M2UF1_files/Associativa.jpeg[Associativa.jpeg]
+
+
+
+
+=   Model relacional 
+
+==  Introducció
+
+Partirem del model ER (Chen) per transformar-lo en un model relacional.
+
+==  Transformació d’entitats
+
+Cada entitat del model ER es transforma en una relació del model 
+relacional. Els atributs de l’entitat seran atributs de la relació i, 
+anàlogament, la clau primària de l’entitat serà la clau primària de la 
+relació.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/ER_clau.jpg[ER clau.jpg]
+
+
+i obtenim en el model relacional:
+
+EMPLEAT ([underline]#dni#, nss, nom, cognom, sou)
+
+
+
+Un cop transformades totes les entitats en relacions (taules), cal 
+transformar totes les relacions en què aquestes entitats intervenen.
+
+==   Transformació de relacions binàries 
+
+===   Connectivitat 1:1 
+
+El nostre punt de partida és que les entitats que intervenen en la 
+interrelació 1:1 ja s’han transformat en relacions amb els seus 
+corresponents atributs.
+Aleshores només caldrà afegir a qualsevol d’aquestes dues relacions una 
+clau forana que referenciï l’altra relació.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_1_1.jpeg[Connectivitat 1 1.jpeg]
+
+
+
+Per aquesta relació tenim dues opcions:
+
+Opció a:
+CIUTAT ([underline]#nom_ciutat#, ...)
+DELEGACIO([underline]#codi_deleg#, ..., nom_ciutat) 
+on {nom_ciutat} referencia a CIUTAT
+
+
+
+Opció b:
+DELEGACIO([underline]#codi_deleg#, ...,)
+CIUTAT ([underline]#nom_ciutat#, ..., nom_deleg) 
+on {nom_deleg} referencia a DELEGACIO
+
+
+
+
+===   Connectivitat 1:N 
+
+Partim del fet que les entitats que intervenen en la interrelació 1:N
+ ja s’han transformat en relacions amb els seus corresponents atributs. 
+En aquest cas només cal afegir a la relació corresponent a l’entitat del
+ costat N una clau forana que referenciï l’altra relació.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_1_N.jpeg[Connectivitat 1 N.jpeg]
+
+
+Aquesta relació es transforma:  
+
+DESPATX ([underline]#codi_despatx#, ...)
+EMPLEAT ([underline]#dni_empleat#, ... , codi_despatx)  
+on {codi_despatx} referencia a DESPATX
+
+
+
+
+===   Connectivitat N:N 
+
+Una relació M:N es transforma en una relació. La seva clau primària 
+estarà formada pels atributs de la clau primària de les dues entitats 
+relacionades. Els atributs de la relació seran atributs de la nova 
+relació.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_N_N.jpeg[Connectivitat N N.jpeg]
+
+
+Aquesta relació es transforma:  
+
+ESTUDIANT ([underline]#codi_estudiant#, ...)
+ASSIGNATURA ([underline]#codi_assignatura#, ... )
+AVALUACIO ([underline]#estudiant#, [underline]#assignatura#, nota)
+on {estudiant} referencia a ESTUDIANT
+on {assignatura} referencia a ASSIGNATURA
+
+
+
+
+===   Dependència de l’existència 
+
+**Si una de les entitats és opcional a la relació**, i la transformació ha consistit a posar una clau forana a la relació que correspon a l’altra entitat, aleshores **aquella clau forana pot prendre valors nuls**.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Dependencia.jpeg[Dependencia.jpeg]
+
+
+Per aquesta relació tenim dues opcions:  
+
+Opció a:  
+
+EMPLEAT ([underline]#empleat#, ...)
+DEPARTAMENT ([underline]#departament#, ..., empleat_cap)
+on {empleat_cap} referencia a EMPLEAT
+
+Opció b:  
+
+DEPARTAMENT ([underline]#departament#, ...) 
+EMPLEAT ([underline]#empleat#, ..., departament) 
+on {departament} referencia a DEPARTAMENT i pot prendre valors nuls
+
+
+
+La millor opció és la a perquè obliga a que la clau forana tingui sempre un valor.
+
+
+==  Transformació de relacions terciàries
+
+Sempre dóna lloc a una nova relació, la qual tindrà com a atributs 
+les claus primàries de les tres entitats relacionades i tots els 
+atributs que tingui la relació.
+
+===  Connectivitat N:N:N
+
+Quan la connectivitat de la relació és M:N:P, la relació que s’obté 
+de la seva transformació té com a clau primària tots els atributs que 
+formen les claus primàries de les tres entitats interrelacionades.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_N_N_N.jpeg[Connectivitat N N N.jpeg]
+
+
+Es transforma en:  
+
+ESTUDIANT ([underline]#codi_estudiant#, ...)
+ASSIGNATURA ([underline]#codi_assignatura#, ... )
+SEMESTRE ([underline]#codi_semestre#, ... )
+DIRECCIO ([underline]#estudiant#, [underline]#assignatura#, [underline]#semestre#, nota) 
+on {estudiant} referencia a ESTUDIANT
+on {assignatura} referencia a ASSIGNATURA
+on {semestre} referencia a SEMESTRE
+
+
+
+
+===   Connectivitat M:N:1
+
+Quan la connectivitat de la interrelació és M:N:1, la relació que 
+s’obté de la seva transformació té com a clau primària tots els atributs
+ que formen les claus primàries de les dues entitats dels costats de la 
+interrelació etiquetats amb M i amb N.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_N_N_1.jpeg[Connectivitat N N 1.jpeg]
+
+
+Es transforma en:  
+
+MESTRE (codi_mestre, ...)
+CURS ([underline]#codi_curs#, ... )
+ESCOLA ([underline]#codi_escola#, ... )
+DESTINACIO ([underline]#codi_mestre#, [underline]#codi_curs#, codi_escola) 
+on {codi_mestre} referencia a MESTRE
+on {curs} referencia a CURS
+on {codi_escola} referencia a ESCOLA
+
+
+
+
+===  Connectivitat N:1:1
+
+Quan la connectivitat de la interrelació és N:1:1, la relació que 
+s’obté de la seva transformació té com a clau primària els atributs que 
+formen la clau primària de l’entitat del costat N i els atributs que 
+formen la clau primària de qualsevol de les dues entitats que estan 
+connectades amb 1.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_N_1_1.jpeg[Connectivitat N 1 1.jpeg]
+
+
+Per aquesta relació tenim dues opcions:  
+
+Opció a:  
+
+HORA-SETMANAL ([underline]#codi_hora#, ...)
+AULA ([underline]#codi_aula#, ... )
+ASSIGNATURA ([underline]#codi_assignatura#, ...)
+CLASSE ([underline]#codi_hora#, [underline]#codi_aula#, codi_assignatura, durada)
+on {codi_hora} referencia HORA-SETMANAL
+on {codi_aula} referencia AULA 
+on {codi_assignatura} referencia ASSIGNATURA
+
+Opció b:  
+
+HORA-SETMANAL ([underline]#codi_hora#, ...)
+AULA ([underline]#codi_aula#, ... )
+ASSIGNATURA ([underline]#codi_assignatura#, ...)
+CLASSE ([underline]#codi_hora#, codi_aula, [underline]#codi_assignatura#, durada)
+on {codi_hora} referencia HORA-SETMANAL
+on {codi_aula} referencia AULA 
+on {codi_assignatura} referencia ASSIGNATURA
+
+
+
+
+===  Connectivitat 1:1:1
+
+Quan la connectivitat de la interrelació és 1:1:1, la relació que 
+s’obté de la seva transformació té com a clau primària els atributs que 
+formen la clau primària de dues entitats qualssevol de les tres 
+interrelacionades.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Connectivitat_1_1_1.jpeg[Connectivitat 1 1 1.jpeg]
+
+
+Per aquesta relació tenim dues opcions:  
+
+Opció a:  
+
+TRIBUNAL ([underline]#codi_tribunal#, ...)
+ESTUDIANT ([underline]#codi_estudiant#, ... )
+PROJECTE ([underline]#codi_projecte#, ...)
+DEFENSA ([underline]#tribunal#, [underline]#projecte#, estudiant, data)
+on {tribunal} referencia TRIBUNAL
+on {projecte} referencia PROJECTE
+on on {estudiant} referencia ESTUDIANT
+
+Opció b:  
+
+TRIBUNAL ([underline]#codi_tribunal#, ...)
+ESTUDIANT ([underline]#codi_estudiant#, ... )
+PROJECTE ([underline]#codi_projecte#, ...)
+DEFENSA ([underline]#tribunal#, projecte, [underline]#estudiant#, data)
+on {tribunal} referencia TRIBUNAL
+on {projecte} referencia PROJECTE
+on on {estudiant} referencia ESTUDIANT
+
+Opció c:  
+
+TRIBUNAL ([underline]#codi_tribunal#, ...)
+ESTUDIANT ([underline]#codi_estudiant#, ... )
+PROJECTE ([underline]#codi_projecte#, ...)
+DEFENSA (tribunal, [underline]#projecte#, [underline]#estudiant#, data)
+on {tribunal} referencia TRIBUNAL
+on {projecte} referencia PROJECTE
+on on {estudiant} referencia ESTUDIANT
+
+
+
+
+Quan la relació entre entitats és n-ària, la relació que s’obté de la seva transformació té com a clau primària:
+
+*   **tots** els atributs que formen la clau primària de l’entitat dels costats **N**
+
+*   **tots menys un** els atributs que formen la clau primària de qualssevol de les entitats que estan connectades amb **1**.
+
+==  Transformació de relacions recursives
+
+Si una interrelació recursiva té connectivitat 1:1 o 1:N, dóna lloc a
+ una clau forana i, si té connectivitat M:N o és n-ària, origina una 
+nova relació.
+
+Exemple 1:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Recursiva_1_1.jpeg[Recursiva 1 1.jpeg]
+
+
+Per aquesta relació tenim la transformació:  
+
+PERSONA ([underline]#dni#, ... , dni_parella)
+on {dni_parella} referencia a PERSONA i pot tenir valors nuls
+
+
+
+
+Exemple 2:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Recursiva_N_N.jpeg[Recursiva N N.jpeg]
+
+
+Per aquesta relació tenim la transformació:  
+
+PERSONA ([underline]#dni#, ... )
+AMISTAT ([underline]#dni_persona#, [underline]#dni_amic#) 
+on {dni_persona} referencia a PERSONA 
+on {dni_amic} referencia a PERSONA
+
+
+
+
+==   Transformació d’entitats dèbils
+
+Aquestes entitats sempre estan al costat N d’una interrelació 1:N que
+ completa la seva identificació.
+La clau forana originada per aquesta interrelació 1:N ha de formar part 
+de la clau primària de la relació corresponent a l’entitat dèbil.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Relacional_debil.jpeg[Relacional debil.jpeg]
+
+
+Per aquesta relació tenim la transformació:  
+
+EDIFICI ([underline]#nom#, adreça)
+DESPATX ([underline]#numero#, superficie,[underline]#nom#)
+on {nom} referencia EDIFICI
+
+
+
+
+==  Transformació de la generalització/especialització
+
+Cadascuna de les entitats superclasse i subclasse que formen part 
+d’una generalització/especialització es transforma en una relació:
+
+*   La relació de l’entitat superclasse té com a clau primària la clau de l’entitat superclasse i conté tots els atributs comuns.
+
+*   Les relacions de les entitats subclasse tenen com a clau
+primària la clau de l’entitat superclasse i contenen els atributsespecífics de la subclasse.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Especialitzacio2.jpeg[Especialitzacio2.jpeg]
+
+
+Per aquesta relació tenim la transformació:  
+
+EMPLEAT([underline]#dni#, nom, adreça, telefon)
+DIRECTIU ([underline]#dni#, cotxe) 
+on {dni} referencia EMPLEAT
+
+ADMINISTRATIU ([underline]#dni#, antiguitat) 
+on {dni} referencia EMPLEAT
+
+TECNIC ([underline]#dni#, titol) 
+on {dni} referencia EMPLEAT
+
+PROJECTE([underline]#codi_projecte#)
+
+TREBALLA([underline]#dni#, [underline]#projecte#)
+on {dni} referencia TECNIC
+on {projecte} referencia PROJECTE
+
+
+
+
+==   Transformació d’entitats associatives 
+
+Una entitat associativa té el seu origen en una interrelació. En 
+conseqüència, succeeix que la transformació de la interrelació 
+originària és, alhora, la transformació de l’entitat associativa.
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/Associativa.jpeg[Associativa.jpeg]
+
+
+Per aquesta relació tenim la transformació:  
+
+CIUTAT([underline]#nom_ciutat#, ...)
+VIATGE([underline]#id_viatge#, ...)
+RECORREGUT([underline]#nom_ciutat#, [underline]#id_viatge#)
+on {nom_ciutat} referencia CIUTAT
+on {id_viatge} referencia VIATGE
+
+CLIENT ([underline]#codi_client#, ...)
+REPARTIMENT([underline]#nom_ciutat#, [underline]#id_viatge#, [underline]#codi_client#, paq_car, paq_desc)
+on {nom_ciutat, id_viatge} referencia RECORREGUT 
+on {codi_client} referencia CLIENT
+
+
+
+
+==   Problemàtica de la transformació del model E-R al model relacional 
+
+===   El problema de l’abraçada mortal 
+
+Veiem l’exemple següent:
+
+Exemple:  
+
+Tenim en el model ER:
+
+image::M2UF1_files/AbracadaMortal.jpeg[AbracadaMortal.jpeg]
+
+
+
+
+Si volem transformar aquest model no sabem quin definir abans, donat 
+que els dos necessiten una clau forana de l’altre.
+Ens trobem que una taula A té una clau forana cap a una taula B, i la 
+taula B té una clau forana cap a la taula A. Així cadascuna necessita 
+poder fer referència a l’altra.	
+Tenim dos possibles solucions:
+
+**SOLUCIÓ 1**: Creem la taula A sense cap clau forana, i 
+després creem la taula B amb la seva clau forana de A. Posteriorment, 
+quan s’hagi introduït les dades, afegirem la restricció de la clau 
+forana.
+
+Exemple:  
+
+La transformació al relacional serà:
+DEPARTAMENT ([underline]#codi_departament#, ..., dni_administrador)
+EMPLEAT ([underline]#dni_empleat#, ..., codi_departament)
+on {codi_departament} referencia a DEPARTAMENT 
+
+
+
+Faltaria posteriorment implementar la referència a EMPLEAT:
+DEPARTAMENT ([underline]#codi_departament#, ..., dni_administrador)
+on {dni_administrador} referencia a EMPLEAT
+
+
+
+
+**SOLUCIÓ 2**: Creem una tercera taula C de manera que A no faci referència a cap taula, B fa referència a A, i C fa referència a A i B.
+
+Exemple (continuació):  
+
+La transformació al relacional serà:
+DEPARTAMENT ([underline]#codi_departament#, ...)
+EMPLEAT ([underline]#dni_empleat#, ..., codi_departament)
+on {codi_departament} referencia a DEPARTAMENT 
+
+ADMINISTRA ([underline]#codi_departament#, dni_empleat)
+on {codi_departament} referencia a DEPARTAMENT
+on {dni_administrador} referencia a EMPLEAT 
+
+
+
+
+La millor solució serà la segona, donat que evitem problemes d’inserció de dades.
+
+==   Resum de la transformació del model E-R al model relacional 
+
+|====
+|  Model E-R  |  Model Relacional
+|  Entitat  |  Taula  |  Clau  |  Atributs
+|  Entitat  |  Taula nova  |  La mateixa clau  |  Els mateixos atributs
+|  Relació 1:1  |  -  |  -  |  Passa la clau d'un costat a l'altra com a atribut (clau forana, FK)
+|  Relació 1:N  |  -  |  -  |  Passa la clau del 1 al molts a l'altra com a atribut (clau forana, FK)
+|  Relació N:N  |  Taula nova  |  Les claus de les entitats de la relació  |  Claus de les entitats relacionades i atributs de la relació
+|  Relació n-ària  |  Taula nova  |  Les claus del molts i totes les claus menys una del 1  |  Claus de les entitats relacionades i atributs de la relació
+|  Relació recursiva  |  Com a les relacions no recursives:
+<ul><li> Clau forana (FK) per a binàries 1:1 i 1:N
+</li><li> Taula per a binàries N:N i n-àries
+</li></ul>
+|  Entitat dèbil  |  -  |  La FK també forma part de la clau primària (PK)  |  Passa la clau del 1 al molts a l'altra com a atribut (clau forana, FK) i clau primària
+|  Generalització/especialització  |  -  |  La clau de la superclasse passa a la subclasse com a PK  |  Atributs de la subclasse i clau de la superclasse (FK)
+|  Entitat associativa  |  Taula nova  |  Les claus de les entitats de la relació  |  Claus de les entitats relacionades i atributs de la relació
+|====
+
+=   Normalització 
+
+==   Regles de normalització 
+
+Les regles de normalització ajuden:
+
+*   en el disseny d’una base de dades,
+
+*   a crear una base de dades normalitzada,
+
+*   a verificar el seu disseny.
+
+Una base de dades està normalitzada quan no conté informació repetida
+ i no mostra anomalies causades per la actualització o per la seva 
+eliminació.
+
+==   Definició de normalització 
+
+Existeixen tres regles bàsiques o formes normals: 
+
+*   Una base de dades normalitzada que compleix la primera forma normal  es diu que és del tipus 1NF.
+
+*   Una base de dades normalitzada que compleix la segona forma
+normal  es diu que és del tipus 2NF. Per que això sigui possible ha decomplir la primera forma normal.
+
+*   De la mateixa manera es procedirà per la tercera forma normal.
+
+Realment hi ha sis formes normals, encara que les més generals són les tres primeres.
+
+==   Errors típics de disseny en bases de dades 
+
+*   Error de duplicació de dades
+
+*   Error d’actualització de dades
+
+*   Error d’eliminació de dades
+
+La necessitat d’establir una normalització ve donada per la facilitat
+ amb que es poden cometre errades en el disseny de bases de dades.
+
+==   Primera forma normal (1NF)
+
+**Una taula no ha de tenir grups de dades repetits.**
+
+Per això ens hem d'assegurar que:
+
+*   No tenim vectors de camps a una columna.
+
+*   No tenim grups repetits en vàries columnes.
+
+*   No tenim valors nuls.
+
+Aquest exemple és quan en un camp amb varis valors del mateix domini 
+(per exemple tenir diferents números de telèfon o adreces de correu). 
+Generalment el que es fa és separar-ho amb algun símbol (comes, espais, 
+...) i després que ho processi l'aplicació.
+
+Exemple:  
+
+Volem crear una base de dades per recollir les 
+dades d'una comanda. La nostra idea original serà tenir les dades del 
+client i les dades dels productes:
+
+. Taula Comanda
+
+|====
+|  [underline]#NumeroCom#  |  DataCom  |  NumeroProv  |  NomProv  |  AdreçaProv  |  NumeroProd  |  DescripcioProd  |  PreuProd  |  QuantitatProd
+| 101 | 18/5/2011 | 11 | SPD SL | C.Major,3, Terrassa | 1001,1012,1009 | Monitor 17',Ratolí,Teclat | 200€,12€,21€ | 3,8,5
+| 102 | 19/5/2011 | 15 | Eix20 | Pl.Gran,8, Terrassa | 1009 | Teclat | 21€ | 2
+| 103 | 19/5/2011 | 18 | Sino SA | C.Alt,1, Viladecavalls | 1001,1009 | Monitor 17',Teclat | 200€,21€ | 4,10
+|====
+
+Veiem que hi ha grups de dades repetits, per tant no cumpleix la primera forma normal (1NF):
+
+. Taula Comanda
+
+|====
+|  [underline]#NumeroCom#  |  DataCom  |  NumeroProv  |  NomProv  |  AdreçaProv  |  NumeroProd  |  DescripcioProd  |  PreuProd  |  QuantitatProd
+| 101 | 18/5/2011 | 11 | SPD SL | C.Major,3, Terrassa | 1001,1012,1009 | Monitor 17',Ratolí,Teclat | 200€,12€,21€ | 3,8,5
+| 102 | 19/5/2011 | 15 | Eix20 | Pl.Gran,8, Terrassa | 1009 | Teclat | 21€ | 2
+| 103 | 19/5/2011 | 18 | Sino SA | C.Alt,1, Viladecavalls | 1001,1009 | Monitor 17',Teclat | 200€,21€ | 4,10
+|====
+
+Així, quan està normalitzada 1NF tenim::
+
+. Taula Comanda
+
+|====
+|  [underline]#NumeroCom#  |  DataCom  |  NumeroProv  |  NomProv  |  AdreçaProv
+| 101 | 18/5/2011 | 11 | SPD SL | C.Major,3, Terrassa
+| 102 | 19/5/2011 | 15 | Eix20 | Pl.Gran,8, Terrassa
+| 103 | 19/5/2011 | 18 | Sino SA | C.Alt,1, Viladecavalls
+|====
+
+. Taula Producte
+
+|====
+|  [underline]#NumeroCom#  |  [underline]#NumeroProd#  |  DescripcioProd  |  PreuProd  |  QuantitatProd
+| 101 | 1001 | Monitor 17' | 200€ | 3
+| 101 | 1012 | Ratolí | 12€ | 8
+| 101 | 1009 | Teclat | 21€ | 5
+| 102 | 1009 | Teclat | 21€ | 2
+| 103 | 1001 | Monitor 17' | 200€ | 4
+| 103 | 1009 | Teclat | 21€ | 10
+|====
+
+==   Segona forma normal (2NF)
+
+**Qualsevol camp que no depengui totalment de la clau principal es mourà a una altra taula.**
+
+Així, qualsevol camp que no depengui totalment de la clau 
+principal (que pot estar formada per més d'un atribut) s'ha de moure a 
+una nova taula. Per fer-ho escollim primer la taula que tenim com a clau
+ principal i revisem si tots els camps si d'aquesta clau.
+
+Exemple:  
+
+Tenim que la taula Producte està normalitzada 
+1NF, però els camps descripcioProd i PreuProd no depenen totalment de la
+ clau principal (que és numeroCom i numeroProd):
+
+. Taula Producte
+
+|====
+|  [underline]#NumeroCom#  |  [underline]#NumeroProd#  |  DescripcioProd  |  PreuProd  |  QuantitatProd
+| 101 | 1001 | Monitor 17' | 200€ | 3
+| 101 | 1012 | Ratolí | 12€ | 8
+| 101 | 1009 | Teclat | 21€ | 5
+| 102 | 1009 | Teclat | 21€ | 2
+| 103 | 1001 | Monitor 17' | 200€ | 4
+| 103 | 1009 | Teclat | 21€ | 10
+|====
+
+Només depenen de numeroProd, per tant els movem a una nova taula:
+
+. Taula Comanda
+
+|====
+|  [underline]#NumeroCom#  |  DataCom  |  NumeroProv  |  NomProv  |  AdreçaProv
+| 101 | 18/5/2011 | 11 | SPD SL | C.Major,3, Terrassa
+| 102 | 19/5/2011 | 15 | Eix20 | Pl.Gran,8, Terrassa
+| 103 | 19/5/2011 | 18 | Sino SA | C.Alt,1, Viladecavalls
+|====
+
+. Taula LiniaComanda
+
+|====
+|  [underline]#NumeroCom#  |  [underline]#NumeroProd#  |  QuantitatProd
+| 101 | 1001 | 3
+| 101 | 1012 | 8
+| 101 | 1009 | 5
+| 102 | 1009 | 2
+| 103 | 1001 | 4
+| 103 | 1009 | 10
+|====
+
+. Taula Producte
+
+|====
+|   [underline]#NumeroProd#  |  DescripcioProd  |  PreuProd
+| 1001 | Monitor 17' | 200€
+| 1009 | Teclat | 21€
+| 1012 | Ratolí | 12€
+|====
+
+==   Tercera forma normal (3NF)
+
+**No han d’existir dependències entre camps que no siguin camps claus.**
+
+Això vol dir que cap camp que no sigui part de la clau pot dependre d'altre camp que no sigui la clau.
+
+Exemple:  
+
+Tenim que la taula Comanda té el camp nomProv i adreçaProv que depenen de numeroCom, però també de numeroProv:
+
+. Taula Comanda
+
+|====
+|  [underline]#NumeroCom#  |  DataCom  |  NumeroProv  |  NomProv  |  AdreçaProv
+| 101 | 18/5/2011 | 11 | SPD SL | C.Major,3, Terrassa
+| 102 | 19/5/2011 | 15 | Eix20 | Pl.Gran,8, Terrassa
+| 103 | 19/5/2011 | 18 | Sino SA | C.Alt,1, Viladecavalls
+|====
+
+Per tant creem una nova taula:
+
+. Taula Comanda
+
+|====
+|  [underline]#NumeroCom#  |  DataCom  |  NumeroProv
+| 101 | 18/5/2011 | 11
+| 102 | 19/5/2011 | 15
+| 103 | 19/5/2011 | 18
+|====
+
+. Taula Proveïdor
+
+|====
+|  [underline]#NumeroProv#  |  NomProv  |  AdreçaProv
+| 11 | SPD SL | C.Major,3, Terrassa
+| 15 | Eix20 | Pl.Gran,8, Terrassa
+| 18 | Sino SA | C.Alt,1, Viladecavalls
+|====
+
+. Taula LiniaComanda
+
+|====
+|  [underline]#NumeroCom#  |  [underline]#NumeroProd#  |  QuantitatProd
+| 101 | 1001 | 3
+| 101 | 1012 | 8
+| 101 | 1009 | 5
+| 102 | 1009 | 2
+| 103 | 1001 | 4
+| 103 | 1009 | 10
+|====
+
+. Taula Producte
+
+|====
+|   [underline]#NumeroProd#  |  DescripcioProd  |  PreuProd
+| 1001 | Monitor 17' | 200€
+| 1009 | Teclat | 21€
+| 1012 | Ratolí | 12€
+|====
+
+==   Forma Normal de Boyce-Codd (FNBC) 
+
+Diem que una taula està en **forma normal de Boyce-Codd** (FNBC), si i només **si existeixen dependències funcionals que depenen de la clau primària** (o qualsevol clau alternativa). Si la clau primària està formada per un sol atribut i està en 3NF, ja està en FNBC.
